@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "682847178807",
+    "project_id": "ecoevolve-auth-2148c",
+    "storage_bucket": "ecoevolve-auth-2148c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682847178807:android:1f6120bb7cefe049cbefb2",
+        "android_client_info": {
+          "package_name": "com.example.app_starting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682847178807-d1el8ebcftag5h4bbd63k0bg2in0p0cr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB608AVDCc26nrz31njUUu0zwsNUPVjGME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682847178807-d1el8ebcftag5h4bbd63k0bg2in0p0cr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "682847178807-59b3nqbpj8uf02hh953hvj73gd64q9ip.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ecoevolve"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682847178807:android:6133e89ac9c46474cbefb2",
+        "android_client_info": {
+          "package_name": "com.example.eco_evolve"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682847178807-d1el8ebcftag5h4bbd63k0bg2in0p0cr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB608AVDCc26nrz31njUUu0zwsNUPVjGME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682847178807-d1el8ebcftag5h4bbd63k0bg2in0p0cr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "682847178807-59b3nqbpj8uf02hh953hvj73gd64q9ip.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ecoevolve"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682847178807:android:de64edb411839313cbefb2",
+        "android_client_info": {
+          "package_name": "com.example.ecoevolve"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682847178807-d1el8ebcftag5h4bbd63k0bg2in0p0cr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB608AVDCc26nrz31njUUu0zwsNUPVjGME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682847178807-d1el8ebcftag5h4bbd63k0bg2in0p0cr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "682847178807-59b3nqbpj8uf02hh953hvj73gd64q9ip.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ecoevolve"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

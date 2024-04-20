@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>682847178807-egiko6sgsmhb5d1i974p6u6csqt30tou.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.682847178807-egiko6sgsmhb5d1i974p6u6csqt30tou</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDfYT4qsmtiIQu9l9CQ1zQstWrTbFqee4Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>682847178807</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.ecoevolve.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>ecoevolve-auth-2148c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ecoevolve-auth-2148c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:682847178807:ios:70cf57ba0f7787bbcbefb2</string>
+</dict>
+</plist>
