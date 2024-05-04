@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../onboarding pages/login_page.dart';
 import 'edit_profile_page.dart';
 
@@ -26,6 +25,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
   String _gender = '';
 
   late final FirebaseAuth _auth;
+
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -55,6 +56,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               _profilePhotoUrl = userData['userPhotoUrl'] ?? '';
               _address = userData['address'] ?? '';
               _gender = userData['gender'] ?? '';
+              _isLoading = false; // Data fetching complete
             });
           }
         }
@@ -63,16 +65,49 @@ class _UserProfilePageState extends State<UserProfilePage> {
       if (kDebugMode) {
         print('Error fetching user details: $e');
       }
+      setState(() {
+        _isLoading = false; // Error occurred, stop loading
+      });
     }
   }
 
   Future<void> _logout() async {
-    try {
-      await _auth.signOut();
-      Navigator.pushReplacementNamed(context, '/login');
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error signing out: $e');
+    // Show confirmation dialog
+    bool confirmLogout = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Logout'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Dismiss the dialog and confirm logout
+                Navigator.of(context).pop(true);
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Dismiss the dialog and cancel logout
+                Navigator.of(context).pop(false);
+              },
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
+    );
+
+    // If user confirms logout, proceed with logout
+    if (confirmLogout == true) {
+      try {
+        await _auth.signOut();
+        Navigator.pushReplacementNamed(context, '/login');
+      } catch (e) {
+        if (kDebugMode) {
+          print('Error signing out: $e');
+        }
       }
     }
   }
@@ -81,14 +116,27 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.zero,
+        preferredSize: const Size.fromHeight(45.0), // Increased height for the AppBar
         child: AppBar(
-          backgroundColor: Colors.lightGreen[400],
+          backgroundColor: Colors.lightGreen[500],
           elevation: 0,
           automaticallyImplyLeading: false,
+          title: const Text(
+            "User Profile", // Title text
+            style: TextStyle(
+              fontSize: 28, // Increased font size
+              fontWeight: FontWeight.bold, // Bold font weight
+              fontFamily: 'Roboto', // Custom font family
+              color: Colors.black, // Text color
+            ),
+          ),
         ),
       ),
-      body: Container(
+      body: _isLoading
+          ? const Center(
+            child: CircularProgressIndicator(), // Show loading indicator
+      )
+          : Container(
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
@@ -100,7 +148,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
         ),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(
+              vertical: 16.0, horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -244,12 +293,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
           const SizedBox(width: 12.0),
           Text(
             label,
-            style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
           const SizedBox(width: 6.0),
           const Text(
             ':',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
           const SizedBox(width: 6.0),
           Expanded(
@@ -264,12 +315,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 }
+
 void main() {
   runApp(MaterialApp(
     home: const UserProfilePage(),
     theme: ThemeData.light(),
     routes: {
-      '/login': (context) => LoginPage(),
+      '/login': (context) => const LoginPage(),
     },
   ));
 }

@@ -13,53 +13,58 @@ class MyNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.lightGreen[300]!,
-            Colors.lightGreen[500]!,
+    return ClipRRect(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.lightGreen[500],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 6,
+              offset: const Offset(0, 3),
+            ),
           ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 6,
-            offset: const Offset(0, 3),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              _buildNavItem(FontAwesomeIcons.house, 'Home', 0),
+              _buildNavItem(FontAwesomeIcons.graduationCap, 'Learn', 1),
+              _buildNavItem(FontAwesomeIcons.listCheck, 'Status', 2),
+              _buildNavItem(FontAwesomeIcons.user, 'Profile', 3),
+            ],
           ),
-        ],
-      ),
-      child: BottomNavigationBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent, // Set transparent background
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.green[900],
-        unselectedItemColor: Colors.lightGreen[100]!, // Use a lighter shade of green
-        onTap: onItemTapped,
-        currentIndex: selectedIndex,
-        selectedFontSize: 14,
-        unselectedFontSize: 12,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
-        selectedIconTheme: const IconThemeData(size: 30), // Adjust icon size
-        unselectedIconTheme: const IconThemeData(size: 26), // Adjust icon size
-        items: <BottomNavigationBarItem>[
-          _buildNavBarItem(FontAwesomeIcons.house, 'Home'),
-          _buildNavBarItem(FontAwesomeIcons.graduationCap, 'Learn'),
-          _buildNavBarItem(FontAwesomeIcons.listCheck, 'Status'),
-          _buildNavBarItem(FontAwesomeIcons.user, 'Profile'),
-        ],
+        ),
       ),
     );
   }
 
-  BottomNavigationBarItem _buildNavBarItem(IconData icon, String label) {
-    return BottomNavigationBarItem(
-      icon: FaIcon(icon),
-      label: label,
+  Widget _buildNavItem(IconData icon, String label, int index) {
+    return GestureDetector(
+      onTap: () => onItemTapped(index),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          FaIcon(
+            icon,
+            size: selectedIndex == index ? 30 : 26,
+            color: selectedIndex == index ? Colors.green[900] : Colors.lightGreen[100],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: selectedIndex == index ? 14 : 12,
+              fontWeight: selectedIndex == index ? FontWeight.bold : FontWeight.normal,
+              color: selectedIndex == index ? Colors.green[900] : Colors.lightGreen[100],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

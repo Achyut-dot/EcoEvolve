@@ -10,11 +10,20 @@ class LearnPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.zero,
+        preferredSize: const Size.fromHeight(45.0), // Increased height for the AppBar
         child: AppBar(
-          backgroundColor: Colors.lightGreen[400],
+          backgroundColor: Colors.lightGreen[500],
           elevation: 0,
           automaticallyImplyLeading: false,
+          title: const Text(
+            "Learn", // Title text
+            style: TextStyle(
+              fontSize: 28, // Increased font size
+              fontWeight: FontWeight.bold, // Bold font weight
+              fontFamily: 'Roboto', // Custom font family
+              color: Colors.black, // Text color
+            ),
+          ),
         ),
       ),
       backgroundColor: Colors.transparent,
@@ -58,12 +67,12 @@ class LearnPage extends StatelessWidget {
               children: [
                 if (videos.isNotEmpty) ...[
                   _buildCategory("Videos"),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
                   ..._buildResourceList(context, videos),
                 ],
                 if (articles.isNotEmpty) ...[
-                  _buildCategory("Articles"),
-                  const SizedBox(height: 8),
+                  _buildCategory("\nArticles"),
+                  const SizedBox(height: 10),
                   ..._buildResourceList(context, articles),
                 ],
               ],

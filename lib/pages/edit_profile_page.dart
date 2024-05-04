@@ -83,11 +83,20 @@ class _EditProfilePageState extends State<EditProfilePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.zero,
+        preferredSize: const Size.fromHeight(45.0),
         child: AppBar(
-          backgroundColor: Colors.lightGreen[400],
+          backgroundColor: Colors.lightGreen[500],
           elevation: 0,
           automaticallyImplyLeading: false,
+          title: const Text(
+            "Edit Profile", // Title text
+            style: TextStyle(
+              fontSize: 28, // Increased font size
+              fontWeight: FontWeight.bold, // Bold font weight
+              fontFamily: 'Roboto', // Custom font family
+              color: Colors.black, // Text color
+            ),
+          ),
         ),
       ),
       body: Container(

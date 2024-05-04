@@ -18,8 +18,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   File? _imageFile;
   String _result = '';
   late AnimationController _animationController;
@@ -73,13 +72,29 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.zero,
+        preferredSize: const Size.fromHeight(45.0), // Adjust the height as needed
         child: AppBar(
-          backgroundColor: Colors.lightGreen[400],
+          backgroundColor: Colors.lightGreen[500],
           elevation: 0,
           automaticallyImplyLeading: false,
+          title: const Text(
+            "Eco Evolve", // Title text
+            style: TextStyle(
+              fontSize: 28, // Increased font size
+              fontWeight: FontWeight.bold, // Bold font weight
+              fontFamily: 'Roboto', // Custom font family
+              color: Colors.black, // Text color
+            ),
+          ),
+          actions: [
+            IconButton(
+              onPressed: _confirmLogout,
+              icon: const Icon(Icons.logout),
+            ),
+          ],
         ),
       ),
+
       backgroundColor: Colors.transparent,
       body: Container(
         width: double.infinity,
@@ -100,8 +115,8 @@ class _HomePageState extends State<HomePage>
                 _buildGreetingWithUserName(),
                 const SizedBox(height: 20),
                 const Text(
-                  'Let\'s work together to reduce waste and protect the Environment',
-                  textAlign: TextAlign.center,
+                  'Pollution is nothing but the resources we are not harvesting. We allow them to disperse because we’ve been ignorant of their value.',
+                  textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.black87,
@@ -113,14 +128,12 @@ class _HomePageState extends State<HomePage>
                   children: [
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: _isSubmitting
-                            ? null
-                            : () {
+                        onPressed: _isSubmitting ? null : () {
                           _animationController.reset();
                           _pickImage();
                         },
                         icon: const FaIcon(FontAwesomeIcons.image),
-                        label: const Text('Pick an image'),
+                        label: const Text('Gallery'),
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black87,
                           backgroundColor: Colors.lightGreen[400],
@@ -130,14 +143,12 @@ class _HomePageState extends State<HomePage>
                     const SizedBox(width: 20),
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: _isSubmitting
-                            ? null
-                            : () {
+                        onPressed: _isSubmitting ? null : () {
                           _animationController.reset();
                           _captureImage();
                         },
                         icon: const FaIcon(FontAwesomeIcons.camera),
-                        label: const Text('Capture an image'),
+                        label: const Text('Camera'),
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black87,
                           backgroundColor: Colors.lightGreen[400],
@@ -239,9 +250,7 @@ class _HomePageState extends State<HomePage>
                           ),
                           value: complaint,
                           groupValue: _selectedComplaint,
-                          onChanged: _isSubmitting
-                              ? null
-                              : (String? value) {
+                          onChanged: _isSubmitting ? null : (String? value) {
                             setState(() {
                               _selectedComplaint = value;
                               _validateInputs();
@@ -338,7 +347,7 @@ class _HomePageState extends State<HomePage>
                       ? SizedBox(
                        width: MediaQuery.of(context).size.width * 0.8, // Set width according to screen width
                        height: 48, // Adjust height as needed
-                        child: const Center(
+                       child: const Center(
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.black), // Change progress color to black
@@ -346,9 +355,9 @@ class _HomePageState extends State<HomePage>
                     ),
                   )
                       : SizedBox(
-                       width: MediaQuery.of(context).size.width * 0.8, // Set width according to screen width
-                       child: const Center( // Center the text
-                        child: Text(
+                        width: MediaQuery.of(context).size.width * 0.8, // Set width according to screen width
+                      child: const Center( // Center the text
+                      child: Text(
                         'Submit Complaint',
                         style: TextStyle(
                           color: Colors.black, // Change text color to black
@@ -371,7 +380,7 @@ class _HomePageState extends State<HomePage>
         : Column(
          crossAxisAlignment: CrossAxisAlignment.start,
          children: [
-        if (_userName.isNotEmpty)
+         if (_userName.isNotEmpty)
           Text(
             '$_greeting,',
             style: TextStyle(
@@ -487,6 +496,16 @@ class _HomePageState extends State<HomePage>
     setState(() {
       _isSubmitting = true;
     });
+
+    if (_imageFile == null) {
+      // Handle the case where _imageFile is null
+      _showMessage('Image file is null. Please select an image.', isError: true);
+      setState(() {
+        _isSubmitting = false;
+      });
+      return;
+    }
+
     // Get current date and time
     DateTime now = DateTime.now();
     String date = DateFormat('yyyy-MM-dd').format(now);
@@ -498,37 +517,46 @@ class _HomePageState extends State<HomePage>
         .child('complaints')
         .child('$date$time.jpg');
     UploadTask uploadTask = storageRef.putFile(_imageFile!);
+
     try {
       await uploadTask;
       String imageUrl = await storageRef.getDownloadURL();
 
-      // Get user ID (You can replace this with your logic to get the user ID)
-      String userId = 'YourUserID';
+      // Get user ID and email
+      final User? user = FirebaseAuth.instance.currentUser;
+      if (user != null && user.email != null) {
+        String userId = user.uid;
+        String userEmail = user.email!;
 
-      // Send complaint to Firestore
-      await FirebaseFirestore.instance.collection('complaints').add({
-        'date': date,
-        'time': time,
-        'complaint': _selectedComplaint,
-        'wasteCategory': _selectedWasteCategory,
-        'workingDays': DateFormat('EEEE').format(now), // Add current day
-        'raisedDate': date, // Add raised date
-        'description': _descriptionController.text,
-        'imageUrl': imageUrl,
-        'location': _currentLocation,
-        'userId': userId,
-        'status': _selectedStatus, // Include status in the document
-      });
-      setState(() {
-        _complaintSubmitted = true;
-      });
-      _showMessage('Complaint submitted successfully!', isError: false);
+        // Send complaint to Firestore
+        await FirebaseFirestore.instance.collection('complaints').add({
+          'date': date,
+          'time': time,
+          'complaint': _selectedComplaint,
+          'wasteCategory': _selectedWasteCategory,
+          'workingDays': DateFormat('EEEE').format(now),
+          'raisedDate': date,
+          'description': _descriptionController.text,
+          'imageUrl': imageUrl,
+          'location': _currentLocation,
+          'userId': userId,
+          'userEmail': userEmail, // Include user email in the document
+          'status': _selectedStatus,
+        });
+
+        setState(() {
+          _complaintSubmitted = true;
+        });
+        _showMessage('Complaint submitted successfully!', isError: false);
+      } else {
+        _showMessage('User not authenticated!', isError: true);
+      }
     } catch (e) {
       if (kDebugMode) {
         print('Error sending complaint: $e');
       }
-      _showMessage('Error submitting complaint. Please try again later.',
-          isError: true);
+      _showMessage(
+          'Error submitting complaint. Please try again later.', isError: true);
     } finally {
       setState(() {
         _isSubmitting = false;
@@ -540,9 +568,9 @@ class _HomePageState extends State<HomePage>
     final snackBar = SnackBar(
       content: Text(
         message,
-        style: TextStyle(color: isError ? Colors.red : Colors.white),
+        style: TextStyle(color: isError ? Colors.black87 : Colors.white),
       ),
-      backgroundColor: isError ? Colors.redAccent : Colors.green,
+      backgroundColor: isError ? Colors.lightGreenAccent : Colors.green,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -608,6 +636,39 @@ class _HomePageState extends State<HomePage>
           _selectedWasteCategory != null &&
           _selectedWasteCategory!.isNotEmpty;
     });
+  }
+
+  Future<void> _confirmLogout() async {
+    bool? confirmLogout = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirm Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmLogout ?? false) {
+      _logout();
+    }
+  }
+
+  void _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    } catch (e) {
+      _showMessage('Error occurred during logout.', isError: true);
+    }
   }
 }
 

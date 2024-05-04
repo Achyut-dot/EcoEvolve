@@ -3,14 +3,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ecoevolve/pages/user_profile_page.dart';
 
+import '../onboarding pages/login_page.dart';
+
 void main() {
-  runApp(const MaterialApp(
-    home: ViewComplaintsPage(),
+  runApp(MaterialApp(
+    routes: {
+      '/': (context) => const ViewComplaintsPage(),
+      '/login': (context) => const LoginPage(),
+      // Add routes for other pages as needed
+    },
   ));
 }
 
 class ViewComplaintsPage extends StatefulWidget {
-  const ViewComplaintsPage({Key? key}) : super(key: key);
+  const ViewComplaintsPage({super.key});
 
   @override
   State<ViewComplaintsPage> createState() => _ViewComplaintsPageState();
@@ -32,19 +38,50 @@ class _ViewComplaintsPageState extends State<ViewComplaintsPage>
     super.dispose();
   }
 
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirm Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Perform logout action
+              // Navigate to the login page and clear user session
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/login', (route) => false);
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
+    )) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.lightGreen[400],
-        title: const Text(
-          'All Complaints',
-          style: TextStyle(color: Colors.black),
-        ),
-        actions: [
-          IconButton(
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.lightGreen[500],
+          title: const Text(
+            "Government Dashboard",
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Roboto',
+              color: Colors.black,
+            ),
+          ),
+          leading: IconButton(
             onPressed: () {
-              // Navigate to the user profile page
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -54,46 +91,54 @@ class _ViewComplaintsPageState extends State<ViewComplaintsPage>
             },
             icon: const FaIcon(FontAwesomeIcons.circleUser),
           ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
-          child: Container(
-            color: Colors.lightGreen[400],
-            child: TabBar(
-              controller: _tabController,
-              indicatorColor: Colors.white,
-              isScrollable: true,
-              labelColor: Colors.white,
-              unselectedLabelColor: Colors.black,
-              labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-              tabs: const [
-                Tab(text: 'Received'),
-                Tab(text: 'In Process'),
-                Tab(text: 'Approved'),
-                Tab(text: 'Completed'),
-                Tab(text: 'All'),
-              ],
+          actions: [
+            IconButton(
+              onPressed: () {
+                _onWillPop();
+              },
+              icon: const Icon(Icons.logout),
+            ),
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(45),
+            child: Container(
+              color: Colors.lightGreen[450],
+              child: TabBar(
+                controller: _tabController,
+                indicatorColor: Colors.white,
+                isScrollable: true,
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.black,
+                labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+                tabs: const [
+                  Tab(text: 'Received'),
+                  Tab(text: 'In Process'),
+                  Tab(text: 'Approved'),
+                  Tab(text: 'Completed'),
+                  Tab(text: 'All'),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.lightGreen[300]!, Colors.lightGreen[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.lightGreen[300]!, Colors.lightGreen[100]!],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
           ),
-        ),
-        child: TabBarView(
-          controller: _tabController,
-          children: [
-            const ComplaintList(status: 'Received'),
-            const ComplaintList(status: 'In Process'),
-            const ComplaintList(status: 'Approved'),
-            const ComplaintList(status: 'Completed'),
-            AllComplaintsTab(),
-          ],
+          child: TabBarView(
+            controller: _tabController,
+            children: const [
+              ComplaintList(status: 'Received'),
+              ComplaintList(status: 'In Process'),
+              ComplaintList(status: 'Approved'),
+              ComplaintList(status: 'Completed'),
+              AllComplaintsTab(),
+            ],
+          ),
         ),
       ),
     );
@@ -103,7 +148,7 @@ class _ViewComplaintsPageState extends State<ViewComplaintsPage>
 class ComplaintList extends StatefulWidget {
   final String status;
 
-  const ComplaintList({Key? key, required this.status}) : super(key: key);
+  const ComplaintList({super.key, required this.status});
 
   @override
   State<ComplaintList> createState() => _ComplaintListState();
@@ -122,7 +167,7 @@ class _ComplaintListState extends State<ComplaintList> {
   void _toggleExpansion(String complaintId) {
     setState(() {
       _expandedComplaintId =
-          _expandedComplaintId == complaintId ? '' : complaintId;
+      _expandedComplaintId == complaintId ? '' : complaintId;
     });
   }
 
@@ -203,13 +248,13 @@ class _ComplaintListState extends State<ComplaintList> {
           padding: const EdgeInsets.all(16.0),
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             final Map<String, dynamic> data =
-                document.data()! as Map<String, dynamic>;
+            document.data()! as Map<String, dynamic>;
             final String complaintID = document.id;
             final DateTime registrationDate =
                 (data['registrationDate'] as Timestamp?)?.toDate() ??
                     DateTime.now();
             final DateTime? completionDate =
-                (data['completionDate'] as Timestamp?)?.toDate();
+            (data['completionDate'] as Timestamp?)?.toDate();
 
             final String registrationDateString = registrationDate.toString();
             final String completionDateString = completionDate != null
@@ -485,19 +530,19 @@ class _AllComplaintsTabState extends State<AllComplaintsTab> {
                         ),
                       ],
                       rows:
-                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
                         final Map<String, dynamic> data =
-                            document.data()! as Map<String, dynamic>;
+                        document.data()! as Map<String, dynamic>;
                         final DateTime registrationDate =
                             (data['registrationDate'] as Timestamp?)
-                                    ?.toDate() ??
+                                ?.toDate() ??
                                 DateTime.now();
                         final DateTime? completionDate =
-                            (data['completionDate'] as Timestamp?)?.toDate();
+                        (data['completionDate'] as Timestamp?)?.toDate();
                         final String completionDateString =
-                            completionDate != null
-                                ? completionDate.toString()
-                                : 'Not completed yet';
+                        completionDate != null
+                            ? completionDate.toString()
+                            : 'Not completed yet';
                         final int daysToComplete = completionDate != null
                             ? completionDate.difference(registrationDate).inDays
                             : 0;
@@ -582,3 +627,4 @@ class _AllComplaintsTabState extends State<AllComplaintsTab> {
     );
   }
 }
+

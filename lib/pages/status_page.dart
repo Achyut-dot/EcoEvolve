@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'complaint_details_page.dart';
@@ -18,31 +19,41 @@ class StatusPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.zero, // Set a custom height for AppBar
+        preferredSize: const Size.fromHeight(45.0), // Increased height for the AppBar
         child: AppBar(
-          backgroundColor: Colors.lightGreen[400], // Greenish color for AppBar
-          elevation: 0, // No shadow
-          automaticallyImplyLeading: false, // No back button
-        ),
-      ),
-      backgroundColor: Colors.lightGreen[100], // Set background color to green
-      body: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Your Complaints',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+          backgroundColor: Colors.lightGreen[500],
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          title: const Text(
+            "Complaint Status", // Title text
+            style: TextStyle(
+              fontSize: 28, // Increased font size
+              fontWeight: FontWeight.bold, // Bold font weight
+              fontFamily: 'Roboto', // Custom font family
+              color: Colors.black, // Text color
             ),
           ),
-          Expanded(
-            child: ComplaintList(),
+        ),
+      ),
+      backgroundColor: Colors.transparent, // Set background color to transparent
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.lightGreen[300]!, Colors.lightGreen[100]!],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-        ],
+        ),
+        child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ComplaintList(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -53,8 +64,14 @@ class ComplaintList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get the current user ID (You need to implement your logic to get the user ID)
-    const String currentUserID = 'YourUserID';
+    // Get the current user ID
+    final String? currentUserID = FirebaseAuth.instance.currentUser?.uid;
+
+    if (currentUserID == null) {
+      return const Center(
+        child: Text('User not authenticated.'),
+      );
+    }
 
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance

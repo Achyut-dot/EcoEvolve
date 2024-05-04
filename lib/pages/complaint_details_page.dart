@@ -16,19 +16,28 @@ class ComplaintDetailsPage extends StatelessWidget {
     final String completedOn = completionDate != null ? _formatDate(completionDate) : 'Not completed yet';
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Complaint Details',
+        appBar: AppBar(
+          title: const Text('Complaint Details',
           style: TextStyle(fontFamily: 'Roboto', fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.lightGreen[400],
-      ),
-      backgroundColor: Colors.lightGreen[100], // Set background color to green
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        backgroundColor: Colors.lightGreen[500],
+       ),
+        backgroundColor: Colors.transparent, // Make Scaffold background transparent
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+             colors: [Colors.lightGreen[300]!, Colors.lightGreen[100]!],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
             const Text(
               'Complaint:',
               style: TextStyle(
@@ -241,6 +250,7 @@ class ComplaintDetailsPage extends StatelessWidget {
           ],
         ),
       ),
+        )
     );
   }
 

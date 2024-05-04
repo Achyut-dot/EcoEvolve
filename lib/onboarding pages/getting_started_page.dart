@@ -35,7 +35,7 @@ class _GettingStartedPageState extends State<GettingStartedPage>
   @override
   Widget build(BuildContext context) {
     const String welcomeMessage =
-        "Welcome to Eco Evolve\n\nLet's make the world greener together\n";
+        "Welcome to Eco Evolve\n\nYou cannot escape the responsibility of tomorrow by evading it today\n";
 
     return Scaffold(
       backgroundColor: Colors.lightGreen[100], // Background Color
