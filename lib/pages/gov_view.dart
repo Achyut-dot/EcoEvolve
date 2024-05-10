@@ -179,13 +179,16 @@ class _ComplaintListState extends State<ComplaintList> {
     }
   }
 
-  Future<void> _pickCompletionDate(
-      BuildContext context, String complaintID) async {
+  Future<void> _pickCompletionDate(BuildContext context, String complaintID) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2022),
       lastDate: DateTime(2100),
+      selectableDayPredicate: (DateTime date) {
+        // Allow selection if the date is today or earlier
+        return !date.isAfter(DateTime.now());
+      },
     );
     if (pickedDate != null) {
       FirebaseFirestore.instance

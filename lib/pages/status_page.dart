@@ -127,6 +127,9 @@ class ComplaintList extends StatelessWidget {
                     const SizedBox(height: 4),
                     // Calculate and display Days to Complete along with Completion Date
                     _buildDaysToComplete(data),
+                    const SizedBox(height: 4),
+                    // Display detected labels
+                    Text('Detected Labels: ${data['detectedLabels'] ?? 'No labels detected'}'),
                   ],
                 ),
                 onTap: () {

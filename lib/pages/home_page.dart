@@ -542,6 +542,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           'userId': userId,
           'userEmail': userEmail, // Include user email in the document
           'status': _selectedStatus,
+          'detectedLabels': _result,
         });
 
         setState(() {

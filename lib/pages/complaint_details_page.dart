@@ -94,7 +94,26 @@ class ComplaintDetailsPage extends StatelessWidget {
                 color: Colors.black87,
               ),
             ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
+              const Text(
+                'Detected Labels:',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '${data['detectedLabels'] ?? 'No labels detected'}',
+                style: const TextStyle(
+                  fontFamily: 'Roboto',
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 16),
             const Text(
               'Location:',
               style: TextStyle(
