@@ -126,10 +126,10 @@ ECOEVOLVE
         ├── learn_page.dart
         ├── status_page.dart
         ├── user_profile_page.dart
-        ├── bottom_nav_bar.dart
-        ├── firebase_options.dart
-        ├── main_screen.dart
-        └── main.dart
+    ├── bottom_nav_bar.dart
+    ├── firebase_options.dart
+    ├── main_screen.dart
+    └── main.dart
 ├── linux
 ├── macos
 ├── test
