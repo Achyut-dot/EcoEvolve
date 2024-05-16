@@ -112,37 +112,37 @@ ECOEVOLVE
 ├── assets
 ├── build
 ├── ios
-└── lib
-    ├── onboarding pages
-    │   ├── forget_password_page.dart
-    │   ├── getting_started_page.dart
-    │   ├── login_page.dart
-    │   └── sign_up_page.dart
-    └── pages
-        ├── complaint_details_page.dart
-        ├── edit_profile_page.dart
-        ├── gov_view.dart
-        ├── home_page.dart
-        ├── learn_page.dart
-        ├── status_page.dart
-        ├── user_profile_page.dart
-    ├── bottom_nav_bar.dart
-    ├── firebase_options.dart
-    ├── main_screen.dart
-    └── main.dart
+├── lib
+│   ├── onboarding_pages
+│   │   ├── forget_password_page.dart
+│   │   ├── getting_started_page.dart
+│   │   ├── login_page.dart
+│   │   └── sign_up_page.dart
+│   ├── pages
+│   │   ├── complaint_details_page.dart
+│   │   ├── edit_profile_page.dart
+│   │   ├── gov_view.dart
+│   │   ├── home_page.dart
+│   │   ├── learn_page.dart
+│   │   ├── status_page.dart
+│   │   ├── user_profile_page.dart
+│   ├── bottom_nav_bar.dart
+│   ├── firebase_options.dart
+│   ├── main_screen.dart
+│   └── main.dart
 ├── linux
 ├── macos
 ├── test
 ├── web
-└── windows
-    ├── .flutter-plugins
-    ├── .flutter-plugins-dependencies
-    ├── .gitignore
-    ├── .metadata
-    ├── analysis_options.yaml
-    ├── pubspec.lock
-    ├── pubspec.yaml
-    └── README.md
+├── windows
+├── .flutter-plugins
+├── .flutter-plugins-dependencies
+├── .gitignore
+├── .metadata
+├── analysis_options.yaml
+├── pubspec.lock
+├── pubspec.yaml
+└── README.md
 
 ## Screenshot
 
