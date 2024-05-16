@@ -109,12 +109,12 @@ Here is the core folder structure which flutter provides.
 
 ## Screenshot
 
-![Screenshot_20240516-203836](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/2aa82d1f-5496-4e32-8d13-0cc06cdc3e26=250x)
-![Screenshot_20240516-203656](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/ced0ac67-2452-4179-8734-c31e004d371a=250x)
-![Screenshot_20240516-203701](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/221cdd1d-9938-449f-961f-4cb991ba2dd8=250x)
-![Screenshot_20240516-203841](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/0316eaa1-1d2b-4521-8591-864e09414978=250x)
-![Screenshot_20240516-203705](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/85386fed-ff3f-485c-bb04-56b100170508=250x)
-![Screenshot_20240516-203831](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/32cfe51a-a6e1-489f-becb-bd9753cdd4ea=250x)
-![Screenshot_20240516-203848](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/b6b2938a-9d7d-4458-bd4c-7b68ff8a1c3e=250x)
+![Screenshot_20240516-203836](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/2aa82d1f-5496-4e32-8d13-0cc06cdc3e26=100x)
+![Screenshot_20240516-203656](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/ced0ac67-2452-4179-8734-c31e004d371a=100x)
+![Screenshot_20240516-203701](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/221cdd1d-9938-449f-961f-4cb991ba2dd8=100x)
+![Screenshot_20240516-203841](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/0316eaa1-1d2b-4521-8591-864e09414978=100x)
+![Screenshot_20240516-203705](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/85386fed-ff3f-485c-bb04-56b100170508=100x)
+![Screenshot_20240516-203831](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/32cfe51a-a6e1-489f-becb-bd9753cdd4ea=100x)
+![Screenshot_20240516-203848](https://github.com/Achyut-dot/EcoEvolve/assets/68625253/b6b2938a-9d7d-4458-bd4c-7b68ff8a1c3e=100x)
 
 
